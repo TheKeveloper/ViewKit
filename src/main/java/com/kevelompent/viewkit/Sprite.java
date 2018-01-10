@@ -3,6 +3,7 @@ package com.kevelompent.viewkit;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 /**
  * Created by Kevin on 1/9/18.
@@ -16,6 +17,7 @@ public abstract class Sprite {
     protected Vector2 direction;
     public float speed;
     protected Paint paint;
+    protected float rotation;
 
     public Sprite(){
         this.active = true;
@@ -56,14 +58,22 @@ public abstract class Sprite {
     public void setCenter(Vector2 center){position = new Vector2(center.x - (width / 2), center.y - (height / 2));}
     public void setCenter(float x, float y){setCenter(new Vector2(x, y));}
 
-    public Rect getRect(){
-        return new Rect((int) position.x, (int) position.y,
-                (int) (position.x + width),
-                (int) (position.y + height));
+    public RectF getRectF(){
+        return new RectF(position.x, position.y, width, height);
+    }
+
+    public void setRectF(RectF rect){
+        this.position.x = rect.left;
+        this.position.y = rect.top;
+        this.width = rect.width();
+        this.height = rect.height();
     }
 
     public Paint getPaint(){return paint;}
     public void setPaint(Paint paint){this.paint = paint;}
+
+    public float getRotation(){return this.rotation;}
+    public void setRotation(float rotation){this.rotation = rotation;}
 
     public boolean contains(Vector2 point) {
         return point.x > position.x && point.x < position.x + width &&
@@ -77,6 +87,10 @@ public abstract class Sprite {
 
     public boolean intersects(Sprite sprite){
         return Sprite.intersects(this, sprite);
+    }
+
+    public float getRadius(){
+        return (float) Math.sqrt(((width / 2) * (width / 2)) + ((height / 2) * (height / 2)));
     }
 
     public static boolean circleIntersects(Vector2 aCenter, float aRad, Vector2 bCenter, float bRad){

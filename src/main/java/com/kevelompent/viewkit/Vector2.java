@@ -1,5 +1,7 @@
 package com.kevelompent.viewkit;
 
+import android.graphics.PointF;
+
 /**
  * Created by Kevin on 1/9/18.
  */
@@ -22,6 +24,10 @@ public class Vector2
 
     public Vector2(Vector2 src){
         new Vector2(src.x, src.y);
+    }
+
+    public Vector2(PointF p){
+        new Vector2(p.x, p.y);
     }
 
     public Vector2 normalize(){
@@ -58,5 +64,9 @@ public class Vector2
 
     public static float dist(Vector2 a, Vector2 b){
         return (float) Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    }
+
+    public PointF toPointF(){
+        return new PointF(this.x, this.y);
     }
 }

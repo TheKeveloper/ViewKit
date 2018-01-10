@@ -53,7 +53,16 @@ public class BitmapSprite extends Sprite{
     }
 
     public void draw(Canvas canvas){
-        if(active) canvas.drawBitmap(bitmap, position.x, position.y, paint);
+        if(active){
+            if(rotation != 0){
+                canvas.save();
+                canvas.rotate(rotation);
+            }
+            canvas.drawBitmap(bitmap, position.x, position.y, paint);
+            if(rotation != 0){
+                canvas.restore();
+            }
+        }
     }
 
     //Get/set modifiers
@@ -67,9 +76,6 @@ public class BitmapSprite extends Sprite{
         this.width = width;
         this.height = height;
         this.bitmap = Bitmap.createScaledBitmap(this.bitmap, width, height, false);
-    }
-    public double getRadius(){
-        return Math.sqrt(((width / 2) * (width / 2)) + ((height / 2) * (height / 2)));
     }
 
     public boolean circleIntersecs(BitmapSprite cB){
